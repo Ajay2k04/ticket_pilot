@@ -1,6 +1,32 @@
 {
   "routes": [
     {
+      "route": "/_next/*",
+      "serve": "/_next/*"
+    },
+    {
+      "route": "/static/*",
+      "serve": "/static/*"
+    },
+    {
+      "route": "/images/*",
+      "serve": "/images/*"
+    },
+    {
+      "route": "/favicon.ico",
+      "serve": "/favicon.ico"
+    },
+    {
+      "route": "/",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/_not-found",
+      "serve": "/_not-found.html",
+      "statusCode": 200
+    },
+    {
       "route": "/*",
       "serve": "/index.html",
       "statusCode": 200
@@ -8,9 +34,24 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/js/*"]
+    "exclude": [
+      "/_next/*",
+      "/static/*",
+      "/images/*",
+      "/*.{png,jpg,gif,svg,ico,css,js,woff,woff2,ttf,eot}",
+      "/_not-found"
+    ]
   },
   "platform": {
     "apiRuntime": "node:18"
+  },
+  "buildProperties": {
+    "skipBuildDuringDeploy": false,
+    "apiBuildCommand": "",
+    "appBuildCommand": "npm run build:azure",
+    "outputLocation": ".next/server/app"
+  },
+  "globalHeaders": {
+    "cache-control": "no-cache"
   }
 }
